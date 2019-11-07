@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-security-session-demo</artifactId>
+    <artifactId>spring-mvc-security-demo</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -25,6 +25,15 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -35,8 +44,8 @@
                 <version>9.4.12.RC2</version>
                 <configuration>
                     <httpConnector>
-                        <port>8081</port>
-                    </httpConnector>
+                    <port>8080</port>
+                </httpConnector>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
@@ -44,4 +53,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
