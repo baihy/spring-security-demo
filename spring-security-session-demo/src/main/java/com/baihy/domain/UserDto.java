@@ -26,6 +26,8 @@ public class UserDto {
     private String password;
 
     private Integer age;
-    // 用户的权限
+    /**
+     * 用户的权限
+     */
     private List<String> permissions = new ArrayList<>();
 }
