@@ -32,17 +32,7 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/hello", produces = "text/plain;charset=UTF-8")
-    public String login(HttpSession session) {
-        String result = null;
-        Object obj = session.getAttribute(Constants.SESSION_USER_KEY);
-        if (obj == null) {
-            result = "匿名访问";
-        } else {
-            result = ((UserDto) obj).getUsername() + "访问";
-        }
-        return result;
-    }
+
 
     @RequestMapping(value = "logout", produces = "text/plain;charset=UTF-8")
     public String logout(HttpSession session) {

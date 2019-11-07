@@ -17,9 +17,14 @@ public class Constants {
     public static List<UserDto> USERS = new ArrayList<>();
 
     static {
-        USERS.add(new UserDto("11111111", "zhangsan", "123456", 18));
-        USERS.add(new UserDto("22222222", "lisi", "123456", 18));
-        USERS.add(new UserDto("33333333", "wangwu", "123456", 18));
+        List<String> p1 = new ArrayList<>();
+        p1.add("p1");  // 拥有p1权限
+        List<String> p2 = new ArrayList<>();
+        p2.add("p2"); // 拥有p2权限
+        List<String> p3 = new ArrayList<>();
+        USERS.add(new UserDto("11111111", "zhangsan", "123456", 18, p1));
+        USERS.add(new UserDto("22222222", "lisi", "123456", 18, p2));
+        USERS.add(new UserDto("33333333", "wangwu", "123456", 18, p3));
     }
 
 
