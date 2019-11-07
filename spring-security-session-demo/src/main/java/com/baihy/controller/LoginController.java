@@ -3,9 +3,12 @@ package com.baihy.controller;
 import com.baihy.domain.AuthenticationRequest;
 import com.baihy.domain.UserDto;
 import com.baihy.service.AuthenticationService;
+import com.baihy.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @projectName: spring-security-demo
@@ -22,9 +25,30 @@ public class LoginController {
     private AuthenticationService authenticationService;
 
     @RequestMapping(value = "/login", produces = "text/plain;charset=UTF-8")
-    public String login(AuthenticationRequest param) {
+    public String login(AuthenticationRequest param, HttpSession session) {
         UserDto userDto = authenticationService.login(param);
+        session.setAttribute(Constants.SESSION_USER_KEY, userDto);
         return userDto.getUsername() + "登录成功！！";
+    }
+
+
+    @RequestMapping(value = "/hello", produces = "text/plain;charset=UTF-8")
+    public String login(HttpSession session) {
+        String result = null;
+        Object obj = session.getAttribute(Constants.SESSION_USER_KEY);
+        if (obj == null) {
+            result = "匿名访问";
+        } else {
+            result = ((UserDto) obj).getUsername() + "访问";
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "logout", produces = "text/plain;charset=UTF-8")
+    public String logout(HttpSession session) {
+        // 设置session失效
+        session.invalidate();
+        return "退出登录成功！！！";
     }
 
 }

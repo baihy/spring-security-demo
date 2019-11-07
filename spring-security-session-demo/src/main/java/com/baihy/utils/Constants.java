@@ -22,4 +22,7 @@ public class Constants {
         USERS.add(new UserDto("33333333", "wangwu", "123456", 18));
     }
 
+
+    public static String SESSION_USER_KEY = "_user";
+
 }
