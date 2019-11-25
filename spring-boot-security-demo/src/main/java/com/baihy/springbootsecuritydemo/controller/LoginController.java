@@ -5,7 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @projectName: spring-security-demo
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LoginController {
 
     @RequestMapping(value = "/login-success")
-    @ResponseBody
     public String loginSuccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();// 获取用户的身份；
@@ -27,7 +25,8 @@ public class LoginController {
             User user = (User) principal;
             username = user.getUsername();
         }
-        return username + "登录成功！！！";
+        System.out.println(username + "登录成功！！！");
+        return "redirect:/main.html";
     }
 
 }
