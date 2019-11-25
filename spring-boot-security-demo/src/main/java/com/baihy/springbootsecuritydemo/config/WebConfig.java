@@ -17,6 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         // login页面是什么页面？
-        registry.addViewController("/").setViewName("redirect:/login");
+        registry.addViewController("/").setViewName("redirect:/login-view");
+        registry.addViewController("/login-view").setViewName("redirect:/login.html");
     }
 }
