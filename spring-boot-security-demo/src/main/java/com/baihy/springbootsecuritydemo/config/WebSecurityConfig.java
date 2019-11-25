@@ -26,6 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
+
+        // 查询用户信息
+
         // 定义用户信息服务
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         // 配置用户的用户名和密码
