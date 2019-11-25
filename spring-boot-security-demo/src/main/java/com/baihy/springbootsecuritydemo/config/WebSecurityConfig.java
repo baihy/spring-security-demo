@@ -58,7 +58,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login-view")  // 指定登录页面跳转的请求
                 .loginProcessingUrl("/login")  // 指定处理请求登录提交的请求
                 .successForwardUrl("/login-success") // 表单登录成功之后，跳转到那个页面
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login-view");
         http.csrf().disable();// 禁用跨域调用
     }
 }

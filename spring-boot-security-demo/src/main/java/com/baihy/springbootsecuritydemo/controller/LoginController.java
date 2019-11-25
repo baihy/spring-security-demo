@@ -1,5 +1,8 @@
 package com.baihy.springbootsecuritydemo.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +20,14 @@ public class LoginController {
     @RequestMapping(value = "/login-success")
     @ResponseBody
     public String loginSuccess() {
-        return "登录成功！！！";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();// 获取用户的身份；
+        String username = "游客";
+        if (principal != null && principal instanceof User) {
+            User user = (User) principal;
+            username = user.getUsername();
+        }
+        return username + "登录成功！！！";
     }
 
 }
