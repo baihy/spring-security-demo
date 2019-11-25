@@ -26,7 +26,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <dependency>
+        <dependency><!--引入spring security认证框架-->
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
         </dependency>
@@ -44,8 +44,8 @@
                 <version>9.4.12.RC2</version>
                 <configuration>
                     <httpConnector>
-                    <port>8080</port>
-                </httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>

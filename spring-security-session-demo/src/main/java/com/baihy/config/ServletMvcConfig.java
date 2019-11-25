@@ -29,7 +29,7 @@ public class ServletMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // 配置
+        // 配置请求地址不经过定义的controller方法，直接跳转到指定的页面
         registry.addViewController("/").setViewName("login");
     }
 

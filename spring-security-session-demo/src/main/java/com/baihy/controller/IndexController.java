@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * @date: 2019/11/7 16:46
  */
 @RestController
-public class indexController {
+public class IndexController {
 
     @RequestMapping(value = "/hello1", produces = "text/plain;charset=UTF-8")
     public String sayHello(HttpSession session) {

@@ -23,9 +23,15 @@ import java.util.List;
 @Component
 public class SimpleAuthenticationInterceptor implements HandlerInterceptor {
 
+    /**
+     *  spring mvc自身的拦截器
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        /**
+         * 返回值为true，表示的放过请求，返回false表示的是拦截请求
+         */
         List<String> anonList = Arrays.asList("/login", "/");
         // 放过匿名登录
         if (anonList.contains(request.getRequestURI())) {
