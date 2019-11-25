@@ -1,7 +1,8 @@
-package com.baihy.controller;
+package com.baihy.springbootsecuritydemo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @projectName: spring-security-demo
@@ -14,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
     @RequestMapping(value = "/login-success")
+    @ResponseBody
     public String loginSuccess() {
-        return "redirect:/main.jsp";
+        return "登录成功！！！";
     }
 
 }

@@ -28,7 +28,6 @@ public class ServletMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         // 配合重定向到默认的登陆页面
         registry.addViewController("/").setViewName("redirect:/login");
-        registry.addViewController("/main").setViewName("redirect:/main.jsp");
     }
 
 
