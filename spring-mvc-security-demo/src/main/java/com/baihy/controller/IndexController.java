@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/index")
-public class indexController {
+public class IndexController {
 
     @RequestMapping(value = "/hello1", produces = "text/plain;charset=UTF-8")
     public String sayHello() {
