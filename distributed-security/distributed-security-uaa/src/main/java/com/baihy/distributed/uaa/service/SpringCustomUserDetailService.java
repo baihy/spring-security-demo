@@ -29,6 +29,6 @@ public class SpringCustomUserDetailService implements UserDetailsService {
          */
         System.out.println("登录输入的用户名: " + username);
         String dbPassword = BCrypt.hashpw("123", BCrypt.gensalt());
-        return User.withUsername("zhangsan").password(dbPassword).authorities("p1").build();
+        return User.withUsername("zhangsan").password(dbPassword).authorities("p1","p2").build();
     }
 }

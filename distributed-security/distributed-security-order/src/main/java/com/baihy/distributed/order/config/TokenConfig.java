@@ -1,4 +1,4 @@
-package com.baihy.distributed.uaa.config;
+package com.baihy.distributed.order.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
