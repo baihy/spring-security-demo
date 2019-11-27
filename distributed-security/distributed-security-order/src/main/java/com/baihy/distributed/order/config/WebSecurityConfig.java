@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable() // 禁用csrf跨域调用
                 .authorizeRequests()
-                .antMatchers("/r/**").authenticated()// 指定所有的请求必须认真通过
+                .antMatchers("/**").authenticated()// 指定所有的请求必须认真通过
                 .anyRequest().permitAll();
     }
 }
