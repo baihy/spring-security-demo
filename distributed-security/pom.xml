@@ -19,13 +19,13 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency><!--引入spring-cloud的依赖-->
+            <!--<dependency>&lt;!&ndash;引入spring-cloud的依赖&ndash;&gt;
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>Greenwich.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

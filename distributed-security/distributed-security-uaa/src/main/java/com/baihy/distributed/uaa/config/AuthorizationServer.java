@@ -1,7 +1,6 @@
 package com.baihy.distributed.uaa.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,12 +10,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
  * @projectName: spring-security-demo
@@ -30,6 +25,11 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     /**
+     * 授权服务的配置
+     */
+
+
+    /**
      * 1.配置客户端详情信息
      */
     @Override
@@ -40,85 +40,46 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .withClient("c1")// client_id 客户端的id
                 .secret(new BCryptPasswordEncoder().encode("secret"))  // 客户端的秘钥
                 // 上面客户端申请令牌，所携带的id和秘钥
-                .resourceIds("res1")   // 客户端可以访问那些资源服务列表
+                .resourceIds("res1")   // 客户端可以访问那些资源服务列表，客户端可以访问的资源服务
                 .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit",
                         "refresh_token")
                 // 该client允许的五种授权类型authorization_code,password,refresh_token,implicit,client_credentials
                 .scopes("all") // 允许的授权范围，客户端的权限，就是允许客户端可以访问那些微服务
+                // .authorities("")  // 此客户端可以使用的权限
                 .autoApprove(false) //false 申请令牌时使用授权码模式，则会跳转到授权的页面，如果是true的话，直接发放令牌。
-                //加上验证回调地址
-                .redirectUris("http://www.baidu.com")
-                .and() /****************可以配置多个授权客户端*************************/
-                .withClient("c2")// client_id 客户端的id
-                .secret(new BCryptPasswordEncoder().encode("secret"))  // 客户端的秘钥
-                // 上面客户端申请令牌，所携带的id和秘钥
-                .resourceIds("res2")   // 客户端可以访问那些资源服务列表
-                .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit",
-                        "refresh_token")
-                // 该client允许的五种授权类型authorization_code,password,refresh_token,implicit,client_credentials
-                .scopes("all") // 允许的授权范围，客户端的权限，就是允许客户端可以访问那些微服务
-                .autoApprove(false) //false 申请令牌时使用授权码模式，则会跳转到授权的页面，如果是true的话，直接发放令牌。
-                //加上验证回调地址
-                .redirectUris("http://www.hao123.com");
+                .redirectUris("http://www.baidu.com");//加上验证回调地址
     }
+
     /****2.配置令牌访问端点****/
     @Autowired
-    private AuthorizationCodeServices authorizationCodeServices; // 授权码服务
-
-    @Bean
-    public AuthorizationCodeServices authorizationCodeServices() {
-        //设置授权码模式的授权码如何存取，暂时采用内存方式
-        return new InMemoryAuthorizationCodeServices();
-    }
+    private AuthenticationManager authenticationManager;   // 认证管理器,所以，我们需要引入WebSecurityConfig类，配置认证管理器
 
 
 
     @Autowired
-    private AuthenticationManager authenticationManager;   // 认证管理器
+    private AuthorizationServerTokenServices authorizationServerTokenServices;  // token管理服务
 
-    /*****开始配置令牌服务*******/
+
     @Autowired
-    private TokenStore tokenStore;
-    // 注入客户端详情服务
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
-    @Bean
-    public AuthorizationServerTokenServices tokenService() {
-        /**
-         * 配置令牌管理服务
-         */
-        DefaultTokenServices service = new DefaultTokenServices();
-        service.setClientDetailsService(clientDetailsService); // 设置客户端信息服务
-        service.setSupportRefreshToken(true);  // 是否产生刷新令牌
-        service.setTokenStore(tokenStore);// 指定token的存储策略
-        service.setAccessTokenValiditySeconds(7200); // 令牌默认有效期2小时 单位是秒
-        service.setRefreshTokenValiditySeconds(259200); // 刷新令牌默认有效期3天  单位是秒
-        return service;
-    }
-
+    private AuthorizationCodeServices authorizationCodeServices;  // 授权码服务
     /**
      * 管理令牌访问端点
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints
-                .authenticationManager(authenticationManager) // 密码模式
+        endpoints.authenticationManager(authenticationManager) // 密码模式
                 .authorizationCodeServices(authorizationCodeServices)  // 授权码模式
-                .tokenServices(tokenService())   // 令牌管理服务
+                .tokenServices(authorizationServerTokenServices)   // 令牌管理服务
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);  // 允许post请求的方式访问令牌
     }
-    /*****结束配置令牌服务*******/
 
     /**
      * 3.令牌访问的安全策略
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
-        security
-                .tokenKeyAccess("permitAll()")
-                .checkTokenAccess("permitAll()")
-                .allowFormAuthenticationForClients();
-
+        security.tokenKeyAccess("permitAll()")  // 表示/oauth/token_key这个url是公开的，就是不用认证就能访问/oauth/token_key这个url
+                .checkTokenAccess("permitAll()") // 表示/oauth/check_token这个url是公开的，就是不用认证就能访问/oauth/check_token这个url
+                .allowFormAuthenticationForClients(); // 允许表单认证（就是通过表单申请令牌）
     }
 }
