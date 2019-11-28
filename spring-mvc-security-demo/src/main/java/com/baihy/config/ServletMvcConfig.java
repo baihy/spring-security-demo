@@ -19,10 +19,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan(basePackages = {"com.baihy"}, includeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION,
         value = Controller.class)})
-@EnableWebMvc
+@EnableWebMvc  // 特别注意：@EnableWebMvc注解是用在web项目中
 public class ServletMvcConfig implements WebMvcConfigurer {
 
     // 扫描除了@Controller注解。这个类相当于是spring中，servlet-mvc.xml文件
+
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -36,14 +37,4 @@ public class ServletMvcConfig implements WebMvcConfigurer {
         // 配置视图解析
         registry.jsp("/WEB-INF/jsp/", ".jsp");
     }
-
-    // 配置视图解析器
-   /* @Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/jsp/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }*/
-
 }

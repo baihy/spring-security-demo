@@ -4,11 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * @projectName: spring-security-demo
@@ -21,9 +18,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    // 把UserDetailsService放入spring容器，这里获取的就是用户数据库中的用户名或密码
-    @Bean
-    @Override
+    // 把UserDetailsService放入spring容器，这里获取的就是用户数据库中的用户名或密码，可以自定义UserDetailsService的实现类，交给spring容器管理
+    /*@Bean
     public UserDetailsService userDetailsService() {
         // 定义用户信息服务
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -31,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         manager.createUser(User.withUsername("zhangsan").password("123").authorities("p1").build());
         manager.createUser(User.withUsername("lisi").password("456").authorities("p2").build());
         return manager;
-    }
+    }*/
 
     // 定义密码的编码器（用来指定采用什么样的方式比对密码）
     @Bean
@@ -43,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 指定所有的请求必须认真通过
-        http.authorizeRequests()
+        http.csrf().disable()   // 禁用跨域调用
+                .authorizeRequests()
                 .antMatchers("/index/hello1").hasAuthority("p1")
                 .antMatchers("/index/hello2").hasAuthority("p2")
-                .mvcMatchers("/index/**")  // 匹配请求
-                .authenticated() // 匹配到的请求必须要认证通过
+                .mvcMatchers("/**").authenticated()// 匹配到的请求必须要认证通过
                 .anyRequest() //除了匹配到请求，
                 .permitAll() // 全部放行
                 .and()
