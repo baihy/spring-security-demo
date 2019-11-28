@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @projectName: spring-security-demo
  * @packageName: com.baihy.domain
@@ -17,17 +14,16 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Accessors(chain = true)
-public class UserDto {
+public class User {
 
-    private String id;
+    private Integer id;
 
     private String username;
 
     private String password;
 
-    private Integer age;
-    /**
-     * 用户的权限
-     */
-    private List<String> permissions = new ArrayList<>();
+    private String fullName;
+
+    private String mobile;
+
 }

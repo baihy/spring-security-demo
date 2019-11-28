@@ -1,12 +1,13 @@
 package com.baihy.controller;
 
 import com.baihy.domain.AuthenticationRequest;
-import com.baihy.domain.UserDto;
+import com.baihy.domain.UserData;
 import com.baihy.service.AuthenticationService;
 import com.baihy.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,28 +18,33 @@ import javax.servlet.http.HttpSession;
  * @author: huayang.bai
  * @date: 2019/11/7 15:55
  */
-@RestController
+@Controller
 public class LoginController {
 
 
     @Autowired
     private AuthenticationService authenticationService;
 
-    @RequestMapping(value = "/login", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/login")
     public String login(AuthenticationRequest param, HttpSession session) {
-        UserDto userDto = authenticationService.login(param);
-        session.setAttribute(Constants.SESSION_USER_KEY, userDto);
-        return userDto.getUsername() + "登录成功！！";
+        UserData userData = authenticationService.login(param);
+        session.setAttribute(Constants.SESSION_USER_KEY, userData);
+        return "redirect:/main";
     }
 
 
+    @RequestMapping(value = "/main")
+    public String main(Model model, HttpSession session) {
+        UserData userData = (UserData) session.getAttribute(Constants.SESSION_USER_KEY);
+        model.addAttribute("userData", userData);
+        return "main";
+    }
 
-
-    @RequestMapping(value = "logout", produces = "text/plain;charset=UTF-8")
+    @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         // 设置session失效
         session.invalidate();
-        return "退出登录成功！！！";
+        return "redirect:/loginPage";
     }
 
 }

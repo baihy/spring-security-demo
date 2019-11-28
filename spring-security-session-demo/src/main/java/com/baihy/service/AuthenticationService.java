@@ -1,7 +1,7 @@
 package com.baihy.service;
 
 import com.baihy.domain.AuthenticationRequest;
-import com.baihy.domain.UserDto;
+import com.baihy.domain.UserData;
 
 /**
  * @projectName: spring-security-demo
@@ -12,10 +12,6 @@ import com.baihy.domain.UserDto;
  */
 public interface AuthenticationService {
 
-    UserDto login(AuthenticationRequest param);
-
-
-    UserDto findUserDtoByUserName(String username);
-
+    UserData login(AuthenticationRequest param);
 
 }

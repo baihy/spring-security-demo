@@ -1,6 +1,6 @@
 package com.baihy.Interceptor;
 
-import com.baihy.domain.UserDto;
+import com.baihy.domain.UserData;
 import com.baihy.utils.Constants;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @projectName: spring-security-demo
@@ -24,7 +25,7 @@ import java.util.List;
 public class SimpleAuthenticationInterceptor implements HandlerInterceptor {
 
     /**
-     *  spring mvc自身的拦截器
+     * spring mvc自身的拦截器
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -32,7 +33,7 @@ public class SimpleAuthenticationInterceptor implements HandlerInterceptor {
         /**
          * 返回值为true，表示的放过请求，返回false表示的是拦截请求
          */
-        List<String> anonList = Arrays.asList("/login", "/");
+        List<String> anonList = Arrays.asList("/login", "/", "/loginPage");
         // 放过匿名登录
         if (anonList.contains(request.getRequestURI())) {
             return true;
@@ -45,14 +46,13 @@ public class SimpleAuthenticationInterceptor implements HandlerInterceptor {
             return false;
         }
         // 验证是否有权限
-        UserDto userDto = (UserDto) obj;
-        if ("/hello1".equals(request.getRequestURI()) && userDto.getPermissions().contains("p1")) {
+        UserData userData = (UserData) obj;
+        List<String> urlList =
+                userData.getPremissions().parallelStream().map(premission -> premission.getUrl()).collect(Collectors.toList());
+        if (urlList.contains(request.getRequestURI())) {
             return true;
         }
-        if ("/hello2".equals(request.getRequestURI()) && userDto.getPermissions().contains("p2")) {
-            return true;
-        }
-        this.writerContent(response, userDto.getUsername() + "权限不足，拒绝访问！！！");
+        this.writerContent(response, userData.getUsername() + "权限不足，拒绝访问！！！");
         return false;
     }
 

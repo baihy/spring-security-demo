@@ -1,6 +1,6 @@
 package com.baihy.controller;
 
-import com.baihy.domain.UserDto;
+import com.baihy.domain.UserData;
 import com.baihy.utils.Constants;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +24,7 @@ public class IndexController {
         if (obj == null) {
             result = "匿名访问";
         } else {
-            result = ((UserDto) obj).getUsername() + "访问";
+            result = ((UserData) obj).getUsername() + "访问";
         }
         return result;
     }
@@ -36,7 +36,7 @@ public class IndexController {
         if (obj == null) {
             result = "匿名访问";
         } else {
-            result = ((UserDto) obj).getUsername() + "访问";
+            result = ((UserData) obj).getUsername() + "访问";
         }
         return result;
     }

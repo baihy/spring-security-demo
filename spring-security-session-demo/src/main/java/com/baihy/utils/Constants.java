@@ -1,6 +1,6 @@
 package com.baihy.utils;
 
-import com.baihy.domain.UserDto;
+import com.baihy.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +14,18 @@ import java.util.List;
  */
 public class Constants {
 
-    public static List<UserDto> USERS = new ArrayList<>();
+    public static List<User> USERS = new ArrayList<>();
 
-    static {
+    /*static {
         List<String> p1 = new ArrayList<>();
         p1.add("p1");  // 拥有p1权限
         List<String> p2 = new ArrayList<>();
         p2.add("p2"); // 拥有p2权限
         List<String> p3 = new ArrayList<>();
-        USERS.add(new UserDto("11111111", "zhangsan", "123456", 18, p1));
-        USERS.add(new UserDto("22222222", "lisi", "123456", 18, p2));
-        USERS.add(new UserDto("33333333", "wangwu", "123456", 18, p3));
-    }
+        USERS.add(new User("11111111", "zhangsan", "123456", 18, p1));
+        USERS.add(new User("22222222", "lisi", "123456", 18, p2));
+        USERS.add(new User("33333333", "wangwu", "123456", 18, p3));
+    }*/
 
 
     public static String SESSION_USER_KEY = "_user";

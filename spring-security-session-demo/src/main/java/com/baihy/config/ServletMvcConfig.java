@@ -31,6 +31,8 @@ public class ServletMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         // 配置请求地址不经过定义的controller方法，直接跳转到指定的页面
         registry.addViewController("/").setViewName("login");
+        registry.addViewController("/loginPage").setViewName("login");
+        registry.addViewController("/main").setViewName("redirect:");
     }
 
 
@@ -39,16 +41,6 @@ public class ServletMvcConfig implements WebMvcConfigurer {
         // 配置视图解析
         registry.jsp("/WEB-INF/jsp/", ".jsp");
     }
-
-    // 配置视图解析器
-   /* @Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/jsp/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }*/
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
