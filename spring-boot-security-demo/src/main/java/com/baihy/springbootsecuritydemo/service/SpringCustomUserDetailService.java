@@ -23,12 +23,12 @@ public class SpringCustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         /**
          *  模拟从数据库中，查询数据
          */
         System.out.println("登录输入的用户名: " + username);
         String dbPassword = BCrypt.hashpw("123", BCrypt.gensalt());
-        return User.withUsername("zhangsan").password(dbPassword).authorities("p1").build();
+        UserDetails userDetails = User.withUsername("zhangsan").password(dbPassword).authorities("p1").build();
+        return userDetails;
     }
 }
