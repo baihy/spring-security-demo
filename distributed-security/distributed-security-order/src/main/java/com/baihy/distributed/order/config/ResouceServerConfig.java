@@ -17,12 +17,12 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
  * @date: 2019/11/27 15:16
  */
 @Configuration
-@EnableResourceServer
+@EnableResourceServer  //
 public class ResouceServerConfig extends ResourceServerConfigurerAdapter {
 
     public static final String RESOURCE_ID = "res1";
 
-  /*  @Autowired // 远程验证token
+   /* @Autowired // 远程验证token
     private ResourceServerTokenServices resourceServerTokenServices;*/
 
 
@@ -32,7 +32,7 @@ public class ResouceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId(RESOURCE_ID)
-                // .tokenServices(resourceServerTokenServices) // 远程验证token
+                //.tokenServices(resourceServerTokenServices) // 远程验证token
                 .tokenStore(tokenStore) // 基于JWT令牌的验证
                 .stateless(true);
     }

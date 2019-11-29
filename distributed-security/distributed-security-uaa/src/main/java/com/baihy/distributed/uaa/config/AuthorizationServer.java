@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
@@ -27,7 +27,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     /**
      * 授权服务的配置
      */
-
+    @Autowired
+    private ClientDetailsService clientDetailsService;
 
     /**
      * 1.配置客户端详情信息
@@ -35,19 +36,19 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //clients客户端的信息
-        // clients.withClientDetails(clientDetailsService);  // 基于查询数据库的操作
-        clients.inMemory()// 使用in-memory存储，最终会放入数据库中
-                .withClient("c1")// client_id 客户端的id
-                .secret(new BCryptPasswordEncoder().encode("secret"))  // 客户端的秘钥
-                // 上面客户端申请令牌，所携带的id和秘钥
-                .resourceIds("res1")   // 客户端可以访问那些资源服务列表，客户端可以访问的资源服务
-                .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit",
-                        "refresh_token")
-                // 该client允许的五种授权类型authorization_code,password,refresh_token,implicit,client_credentials
-                .scopes("all") // 允许的授权范围，客户端的权限，就是允许客户端可以访问那些微服务
-                // .authorities("")  // 此客户端可以使用的权限
-                .autoApprove(false) //false 申请令牌时使用授权码模式，则会跳转到授权的页面，如果是true的话，直接发放令牌。
-                .redirectUris("http://www.baidu.com");//加上验证回调地址
+        clients.withClientDetails(clientDetailsService);  // 基于查询数据库的操作
+//        clients.inMemory()// 使用in-memory存储，最终会放入数据库中
+//                .withClient("c1")// client_id 客户端的id
+//                .secret(new BCryptPasswordEncoder().encode("secret"))  // 客户端的秘钥
+//                // 上面客户端申请令牌，所携带的id和秘钥
+//                .resourceIds("res1")   // 客户端可以访问那些资源服务列表，客户端可以访问的资源服务
+//                .authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit",
+//                        "refresh_token")
+//                // 该client允许的五种授权类型authorization_code,password,refresh_token,implicit,client_credentials
+//                .scopes("all") // 允许的授权范围，客户端的权限，就是允许客户端可以访问那些微服务
+//                // .authorities("")  // 此客户端可以使用的权限
+//                .autoApprove(false) //false 申请令牌时使用授权码模式，则会跳转到授权的页面，如果是true的话，直接发放令牌。
+//                .redirectUris("http://www.baidu.com");//加上验证回调地址
     }
 
     /****2.配置令牌访问端点****/
@@ -67,9 +68,6 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-
-
-
         endpoints.authenticationManager(authenticationManager) // 密码模式
                 .authorizationCodeServices(authorizationCodeServices)  // 授权码模式
                 .tokenServices(authorizationServerTokenServices)   // 令牌管理服务

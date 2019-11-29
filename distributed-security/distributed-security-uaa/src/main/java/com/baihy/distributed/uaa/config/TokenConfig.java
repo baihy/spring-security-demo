@@ -23,8 +23,8 @@ public class TokenConfig {
     public TokenStore tokenStore() {
         // 采用的是内存方法，生成普通令牌
         return new InMemoryTokenStore();
-    }*/
-
+    }
+*/
 
     /**
      * 定义jwt令牌
