@@ -27,7 +27,8 @@ public class SpringCustomUserDetailService implements UserDetailsService {
          *  模拟从数据库中，查询数据
          */
         System.out.println("登录输入的用户名: " + username);
-        String dbPassword = BCrypt.hashpw("123", BCrypt.gensalt());
+        // 注意：可以在这里动态的配置加密方式：格式是：{加密算法}加密后的密码
+        String dbPassword = "{bcrypt}" + BCrypt.hashpw("123", BCrypt.gensalt());
         UserDetails userDetails = User.withUsername("zhangsan").password(dbPassword).authorities("p1").build();
         return userDetails;
     }

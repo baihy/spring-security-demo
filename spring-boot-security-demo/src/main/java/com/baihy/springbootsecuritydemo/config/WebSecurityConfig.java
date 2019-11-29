@@ -1,12 +1,9 @@
 package com.baihy.springbootsecuritydemo.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @projectName: spring-security-demo
@@ -37,12 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }*/
 
     // 定义密码的编码器（用来指定采用什么样的方式比对密码）
-    @Bean
+    /*@Bean
     public PasswordEncoder passwordEncoder() {
         //return NoOpPasswordEncoder.getInstance();
         // 使用BCrypt算法，对密码进行加密
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
     // 定义用户的安全拦截机制（就是用户的拦截器---最重要）
     @Override

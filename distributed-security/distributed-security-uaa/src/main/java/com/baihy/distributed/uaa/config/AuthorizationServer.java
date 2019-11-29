@@ -55,18 +55,21 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;   // 认证管理器,所以，我们需要引入WebSecurityConfig类，配置认证管理器
 
 
-
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;  // token管理服务
 
 
     @Autowired
     private AuthorizationCodeServices authorizationCodeServices;  // 授权码服务
+
     /**
      * 管理令牌访问端点
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+
+
+
         endpoints.authenticationManager(authenticationManager) // 密码模式
                 .authorizationCodeServices(authorizationCodeServices)  // 授权码模式
                 .tokenServices(authorizationServerTokenServices)   // 令牌管理服务
