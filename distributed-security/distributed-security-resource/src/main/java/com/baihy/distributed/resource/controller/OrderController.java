@@ -1,12 +1,8 @@
-package com.baihy.distributed.order.controller;
+package com.baihy.distributed.resource.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 /**
  * @projectName: spring-security-demo
@@ -18,30 +14,22 @@ import java.security.Principal;
 @RestController
 public class OrderController {
 
+
     @GetMapping("/r1")
-    @PreAuthorize("hasAuthority('r1')")
+    @PreAuthorize("hasAuthority('p1')") // 标记用于p1权限，才能访问
     public String getResource1() {
         return "获取订单资源1";
     }
 
     @GetMapping("/r2")
+    @PreAuthorize("hasAuthority('p2')") // 标记用于p2权限，才能访问
     public String getResource2() {
         return "获取订单资源2";
     }
 
     @GetMapping("/r3")
+    @PreAuthorize("hasAuthority('p3')") // 标记用于p2权限，才能访问
     public String getResource3() {
         return "获取订单资源3";
-    }
-
-    @GetMapping("/info")
-    @ResponseBody
-    public Principal info(Principal principal) {
-        return principal;
-    }
-    @GetMapping("/me")
-    @ResponseBody
-    public Authentication me(Authentication authentication) {
-        return authentication;
     }
 }

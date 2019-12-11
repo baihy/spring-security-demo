@@ -1,4 +1,4 @@
-package com.baihy.distributed.order.config;
+package com.baihy.distributed.resource.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
  * @date: 2019/11/27 15:16
  */
 @Configuration
-@EnableResourceServer  //
+@EnableResourceServer
 public class ResouceServerConfig extends ResourceServerConfigurerAdapter {
 
     public static final String RESOURCE_ID = "res1";
